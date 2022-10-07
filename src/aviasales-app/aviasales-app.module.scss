@@ -1,0 +1,38 @@
+@import '../variables.scss';
+
+body {
+  background-color: $colorGrayBack;
+  font-family: $font-family;
+}
+
+.app {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+
+  &__logo {
+    display: block;
+    margin: 30px auto;
+  }
+
+  &__page {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__content {
+    margin-right: 16px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 710px) {
+  .app {
+    &__page {
+      flex-direction: column;
+      align-items: center;
+      margin: 0 16px;
+      margin-left: 20px;
+    }
+  }
+}
