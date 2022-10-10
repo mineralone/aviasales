@@ -17,6 +17,10 @@ export default function TicketList() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    setCountTickets(5)
+  }, [tickets])
+
+  useEffect(() => {
     const asyncFn = async () => {
       const response = await dispatch(fetchId())
       const id = response.payload
@@ -40,13 +44,15 @@ export default function TicketList() {
 
   const err = statusTickets.errorMessage === 'Перезагрузите страницу!' ? 'error' : 'info'
 
+  const boolTickets = !tickets.length
+
   return (
     <Row className={styles['ticket-list']} gutter={[0, 24]}>
       {statusTickets.errorMessage ? (
         <Alert className={styles['ticket-list__alert']} type={err} message={statusTickets.errorMessage} />
       ) : null}
       {statusTickets.loading ? <Spin className={styles['ticket-list__spinner']} size="large" /> : null}
-      {tickets.length ? null : (
+      {!boolTickets ? null : (
         <Alert
           className={styles['ticket-list__alert']}
           type="info"
@@ -54,7 +60,7 @@ export default function TicketList() {
         />
       )}
       {elements}
-      <Button className={styles['ticket-list__button-go']} type="primary" onClick={onClickGo}>
+      <Button className={styles['ticket-list__button-go']} type="primary" disabled={boolTickets} onClick={onClickGo}>
         Показать ещё 5 билетов!
       </Button>
     </Row>
