@@ -4,7 +4,8 @@ import { nanoid } from 'nanoid'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Ticket from '../ticket/ticket'
-import { fetchId, fetchTickets, ticketsSortFilter } from '../store/ticketSlice'
+import { fetchId, fetchTickets } from '../store/ticketSlice'
+import { ticketsSortFilter } from '../store/ticketsSortSelector'
 
 import styles from './ticket-list.module.scss'
 
@@ -42,14 +43,12 @@ export default function TicketList() {
 
   const onClickGo = () => setCountTickets((count) => count + 5)
 
-  const err = statusTickets.errorMessage === 'Перезагрузите страницу!' ? 'error' : 'info'
-
   const boolTickets = !tickets.length
 
   return (
     <Row className={styles['ticket-list']} gutter={[0, 24]}>
-      {statusTickets.errorMessage ? (
-        <Alert className={styles['ticket-list__alert']} type={err} message={statusTickets.errorMessage} />
+      {statusTickets.errorMessage === 'Перезагрузите страницу!' ? (
+        <Alert className={styles['ticket-list__alert']} type="error" message={statusTickets.errorMessage} />
       ) : null}
       {statusTickets.loading ? <Spin className={styles['ticket-list__spinner']} size="large" /> : null}
       {!boolTickets ? null : (
