@@ -19,7 +19,7 @@ export default function TicketList() {
 
   useEffect(() => {
     setCountTickets(5)
-  }, [tickets])
+  }, [])
 
   useEffect(() => {
     const asyncFn = async () => {
@@ -47,7 +47,7 @@ export default function TicketList() {
 
   return (
     <Row className={styles['ticket-list']} gutter={[0, 24]}>
-      {statusTickets.errorMessage === 'Перезагрузите страницу!' ? (
+      {statusTickets.errorMessage.length !== 0 && statusTickets.errorMessage !== '500 Server' ? (
         <Alert className={styles['ticket-list__alert']} type="error" message={statusTickets.errorMessage} />
       ) : null}
       {statusTickets.loading ? <Spin className={styles['ticket-list__spinner']} size="large" /> : null}

@@ -10,7 +10,7 @@ export default class API {
 
   async getTickets(searchId) {
     const response = await fetch(`${this.apiBase}/tickets?searchId=${searchId}`)
-    if (!response.ok) throw new Error('Возникли непредвиденные ошибки, мы уже исправляем это :)')
+    if (!response.ok) throw new Error('500 Server')
     const data = await response.json()
     return data
   }

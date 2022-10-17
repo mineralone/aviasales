@@ -21,8 +21,12 @@ export const fetchId = createAsyncThunk('ticketSlice/fetchId', async (_, { dispa
 export const fetchTickets = createAsyncThunk('ticketSlice/fetchTickets', async (id, { dispatch, getState }) => {
   const api = new API()
   let stop = false
-  while (!stop && getState().tickets.failedAttempts < 5) {
+  while (!stop && getState().tickets.failedAttempts < 6) {
     try {
+      if (getState().tickets.failedAttempts >= 4) {
+        dispatch(throwError('Problems with connection, try reloading the page'))
+        return
+      }
       if (id === undefined) return
       const response = await api.getTickets(id)
       stop = response.stop
@@ -70,8 +74,6 @@ const ticketSlice = createSlice({
     },
     [fetchTickets.fulfilled]: (state) => {
       state.tickets.loading = false
-      state.tickets.errorMessage =
-        state.tickets.errorMessage === 'Перезагрузите страницу!' ? state.tickets.errorMessage : ''
     },
   },
 })
